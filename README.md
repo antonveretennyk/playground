@@ -1,2 +1,1 @@
-# playground
-Place for you know, play
+Simple Sbt project with Scala.
