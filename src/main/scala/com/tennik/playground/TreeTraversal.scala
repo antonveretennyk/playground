@@ -2,13 +2,13 @@ package com.tennik.playground
 
 object TreeTraversal extends App {
   case class TreeNode(v: Int, l: Option[TreeNode] = None, r: Option[TreeNode] = None) {
-    def hasLeft = l.nonEmpty
-    def hasRight = r.nonEmpty
-    def empty = !(hasLeft || hasRight)
-    def hasBoth = hasLeft && hasRight
+    def hasLeft: Boolean = l.nonEmpty
+    def hasRight: Boolean = r.nonEmpty
+    def empty: Boolean = !(hasLeft || hasRight)
+    def hasBoth: Boolean = hasLeft && hasRight
   }
 
-  def preOrderTraverse(root: TreeNode): List[Int] = {
+  def preOrderTraverse(root: TreeNode): List[Int] = ifRootNotNull(root) {
     var result = List.empty[Int]
     var stack = List.empty[TreeNode]
     var n = root
@@ -41,4 +41,8 @@ object TreeTraversal extends App {
 
     result
   }
+
+  private def ifRootNotNull(root: TreeNode)(body: => List[Int]): List[Int] =
+    if (root == null) List.empty[Int]
+    else body
 }

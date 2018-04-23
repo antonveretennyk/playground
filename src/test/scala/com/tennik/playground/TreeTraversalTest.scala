@@ -1,13 +1,34 @@
 package com.tennik.playground
 
 import com.tennik.playground.TreeTraversal.TreeNode
+import com.tennik.playground.TreeTraversal.preOrderTraverse
 import org.specs2.mutable.Specification
 import org.specs2.specification.Scope
 
 class TreeTraversalTest extends Specification {
 
+  "preOrderTraverse should return value of root is root has no leaf" in new ctx {
+    preOrderTraverse(TreeNode(42)) must be_==(List(42))
+  }
+
+  "preOrderTraverse should return empty list if root == null" in new ctx {
+    preOrderTraverse(null) must be_==(List.empty[Int])
+  }
+
+  "preOrderTraverse should return valid output for right corner case" in new ctx {
+    private val root = TreeNode(1, None, Some(TreeNode(2, None, Some(TreeNode(3, None, None)))))
+
+    preOrderTraverse(root) must be_==(List(1, 2, 3))
+  }
+
+  "preOrderTraverse should return valid output for left corner case" in new ctx {
+    private val root = TreeNode(1, Some(TreeNode(2, Some(TreeNode(3)))))
+
+    preOrderTraverse(root) must be_==(List(1, 2, 3))
+  }
+
   "preOrderTraverse should return valid output" in new ctx {
-    TreeTraversal.preOrderTraverse(inputTree) must be_==(output)
+    preOrderTraverse(inputTree) must be_==(output)
   }
 
   trait ctx extends Scope {
