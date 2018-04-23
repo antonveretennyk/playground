@@ -10,36 +10,44 @@ object TreeTraversal extends App {
 
   def preOrderTraverse(root: TreeNode): List[Int] = ifRootNotNull(root) {
     var result = List.empty[Int]
-    var stack = List.empty[TreeNode]
+    val stack = new Stack[TreeNode]
     var n = root
     var exit = false
 
     do {
-
+      result = result :+ n.v
       n match {
         case x if x.empty =>
-          result = result :+ n.v
           if (stack.nonEmpty) {
-            n = stack.head
-            stack = stack.tail
+            n = stack.pop
           } else {
             exit = true
           }
         case x if x.hasBoth =>
-          result = result :+ n.v
-          stack = n.r.get :: stack
-          n = n.l.get
+          stack.push(x.r.get)
+          n = x.l.get
         case x if x.hasLeft =>
-          result = result :+ n.v
-          n = n.l.get
+          n = x.l.get
         case _ =>
-          result = result :+ n.v
           n = n.r.get
       }
 
     } while (!exit)
 
     result
+  }
+
+  private class Stack[T] {
+    private var xs = List.empty[T]
+    def pop: T = {
+      val x = xs.head
+      xs = xs.tail
+      x
+    }
+
+    def push(x: T): Unit = xs = x :: xs
+
+    def nonEmpty: Boolean = xs.nonEmpty
   }
 
   private def ifRootNotNull(root: TreeNode)(body: => List[Int]): List[Int] =

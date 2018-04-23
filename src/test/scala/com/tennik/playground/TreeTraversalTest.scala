@@ -12,7 +12,7 @@ class TreeTraversalTest extends Specification {
   }
 
   "preOrderTraverse should return empty list if root == null" in new ctx {
-    preOrderTraverse(null) must be_==(List.empty[Int])
+    preOrderTraverse(null) must beEmpty
   }
 
   "preOrderTraverse should return valid output for right corner case" in new ctx {
